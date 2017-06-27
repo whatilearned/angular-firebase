@@ -1,0 +1,8 @@
+{
+    "name": "angular-firebase",
+    "version": "1.0.0",
+    "keywords": ["util", "functional", "server", "client", "browser"],
+    "author": "g801691",
+    "contributors": [],
+    "dependencies": {}
+}

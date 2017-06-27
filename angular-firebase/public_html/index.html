@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="wilApp">
+    <head>
+        <title>Angular - Firebase</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+        <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+        
+        <script src="app.js"></script>
+    </head>
+    <body ng-controller="rootCtrl">
+        <p>
+            Hi,{{name}},<br/>
+            This is Angular fire base Application. 
+        </p>
+        <h1><a href="" ng-click="login()"> login</a></h1>
+    </body>
+</html>
