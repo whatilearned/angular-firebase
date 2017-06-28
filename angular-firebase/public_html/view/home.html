@@ -1,1 +1,23 @@
-<h1>HOme Page</h1>
+<h1>Live Market Data</h1>
+
+<table>
+    <thead>
+        <tr>
+            <td>Commodity</td>
+            <td>Opening</td>
+            <td>High</td>
+            <td>Low</td>
+            <td>Close</td>
+            <td><a href="" ng-click="addRecord()"> + </a>  </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="c in commodity">
+            <td> {{c.commodity}}  </td>
+            <td> {{c.o}}  </td>
+            <td> {{c.h}}  </td>
+            <td> {{c.l}}  </td>
+            <td> {{c.c}}  </td>
+        </tr>
+    </tbody>
+</table>

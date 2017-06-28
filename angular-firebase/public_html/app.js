@@ -70,7 +70,14 @@ app.controller('rootCtrl',function($scope,$firebaseAuth){
    } ;
 });
 
-app.controller('homeCtrl',function($scope,$firebaseAuth){});
+app.controller('homeCtrl',function($scope,$firebaseAuth,$firebaseObject){
+    var ref = firebase.database().ref("commodity");
+     var obj = $firebaseObject(ref);
+     obj.$bindTo($scope, "commodity").then(function() {
+         console.log($scope.commodity); 
+        });
+    
+});
 app.controller('loginCtrl',function($scope,$firebaseAuth,$location){
     
     $scope.login=function(){
@@ -85,4 +92,28 @@ app.controller('loginCtrl',function($scope,$firebaseAuth,$location){
     
    }
 });
-app.controller('adminCtrl',function($scope,$firebaseAuth){});
+app.controller('adminCtrl',function($scope,$firebaseAuth,$firebaseObject){
+    var ref = firebase.database().ref();
+     var obj = $firebaseObject(ref);
+    obj.$loaded()
+        .then(function(data) {
+          console.log( angular.toJson(data.commodity)); // true
+            $scope.commodity=data.commodity;
+        })
+        .catch(function(error) {
+          console.error("Error:", error);
+        });
+    
+    $scope.addRecord=function(){
+         $scope.commodity.push({commodity:'',o:null,h:null,l:null,c:null});
+    };
+    $scope.saveData=function(){
+//        var obj = $firebaseObject(ref);
+        obj.commodity = $scope.commodity;
+        obj.$save().then(function(ref) {
+            ref.key === obj.$id; // true
+          }, function(error) {
+            console.log("Error:", error);
+          });
+    }
+});

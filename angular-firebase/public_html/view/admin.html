@@ -1,1 +1,24 @@
 <h2>Admin Page</h2>
+<table>
+    <thead>
+        <tr>
+            <td>Commodity</td>
+            <td>Opening</td>
+            <td>High</td>
+            <td>Low</td>
+            <td>Close</td>
+            <td><a href="" ng-click="addRecord()"> + </a>  </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="c in commodity">
+            <td> <input type="text" ng-model="c.commodity" />  </td>
+            <td> <input type="text" ng-model="c.o" />  </td>
+            <td> <input type="text" ng-model="c.h" />  </td>
+            <td> <input type="text" ng-model="c.l" />  </td>
+            <td> <input type="text" ng-model="c.c" />  </td>
+            <td>del</td>
+        </tr>
+    </tbody>
+</table>
+<button ng-click="saveData()">Save</button>
