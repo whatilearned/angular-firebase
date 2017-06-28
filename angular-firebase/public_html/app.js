@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var app=angular.module('wilApp',['firebase']);
-
+var app=angular.module('wilApp',['firebase','ngRoute']);
+app.factory("Auth", ["$firebaseAuth",
+  function($firebaseAuth) {
+    return $firebaseAuth();
+  }
+]);
 app.config(firebaseConfig);
 
 function firebaseConfig(){
@@ -19,19 +23,66 @@ function firebaseConfig(){
   };
   firebase.initializeApp(config);
 }; 
+app.run(["$rootScope", "$location", function($rootScope, $location) {
+  $rootScope.$on("$routeChangeError", function(event, next, previous, error) {
+    if (error === "AUTH_REQUIRED") {
+      $location.path("/login");
+    }
+  });
+}]);
+app.config(function($routeProvider, $locationProvider){
+    $routeProvider
+            .when('/home',{
+                templateUrl:'view/home.html',
+                controller:'homeCtrl',
+                    resolve: {
+                         "currentAuth": ["Auth", function(Auth) {
+                                        return Auth.$requireSignIn();
+                                        }]
+                            }
+            })
+            .when('/login',{
+                templateUrl:'view/login.html',
+                controller:'loginCtrl'
+            })
+             .when('/admin',{
+                templateUrl:'view/admin.html',
+                controller:'adminCtrl',
+                    resolve: {
+                         "currentAuth": ["Auth", function(Auth) {
+                                        return Auth.$requireSignIn();
+                                        }]
+                    }
+            })
+              .when('/',{
+                templateUrl:'view/login.html',
+                controller:'loginCtrl'
+            });
+});
+
 app.controller('rootCtrl',function($scope,$firebaseAuth){
    $scope.name="Alluri Ramesh Raju "; 
-   
-   
-   $scope.login=function(){
+   $scope.logout=function(){
+       console.log("clicked logout");
+        var auth = $firebaseAuth();
+        auth.$signOut();
+        console.log(angular.toJson( $firebaseAuth().$signOut()));
+   } ;
+});
+
+app.controller('homeCtrl',function($scope,$firebaseAuth){});
+app.controller('loginCtrl',function($scope,$firebaseAuth,$location){
+    
+    $scope.login=function(){
                    console.log("Auth");
         var auth = $firebaseAuth();
-        auth.$signInWithEmailAndPassword('user1@testapp.com', "password").then(function(firebaseUser){
+        auth.$signInWithEmailAndPassword($scope.user,$scope.passcode).then(function(firebaseUser){
                 console.log("ok");
+                 $location.path("/home");
         }).catch (function(err){
-            console.log("failed");
+            console.log("failed " + err);
         });
     
    }
 });
-
+app.controller('adminCtrl',function($scope,$firebaseAuth){});

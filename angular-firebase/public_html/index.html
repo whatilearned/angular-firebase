@@ -21,6 +21,13 @@ and open the template in the editor.
             Hi,{{name}},<br/>
             This is Angular fire base Application. 
         </p>
+        <ol>
+            <li><a href="#!/home">Home</a></li>
+            <li><a href="#!/login">login</a></li>
+            <li><a href="#!/admin">Admin</a></li>
+            <li><a  ng-click="logout();">Logout</a></li>
+        </ol>
         <h1><a href="" ng-click="login()"> login</a></h1>
+    <ng-view></ng-view>
     </body>
 </html>
