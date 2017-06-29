@@ -1,0 +1,10 @@
+
+firebase roles set to give wirte permsion to one user. 
+Rule 
+-----------
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth.uid =='4xovFbyusHQUPesldL45qNnRHk42'"
+  }
+}

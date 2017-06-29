@@ -68,6 +68,7 @@ app.controller('rootCtrl',function($scope,$firebaseAuth){
         auth.$signOut();
         console.log(angular.toJson( $firebaseAuth().$signOut()));
    } ;
+   $scope.isAdmin=false;
 });
 
 app.controller('homeCtrl',function($scope,$firebaseAuth,$firebaseObject){
@@ -78,18 +79,35 @@ app.controller('homeCtrl',function($scope,$firebaseAuth,$firebaseObject){
         });
     
 });
-app.controller('loginCtrl',function($scope,$firebaseAuth,$location){
+app.controller('loginCtrl',function($scope,$firebaseAuth,$location,$firebaseObject){
     
     $scope.login=function(){
                    console.log("Auth");
         var auth = $firebaseAuth();
         auth.$signInWithEmailAndPassword($scope.user,$scope.passcode).then(function(firebaseUser){
                 console.log("ok");
-                 $location.path("/home");
+//                 $location.path("/home");
+                $scope.chkWriteAccess();
         }).catch (function(err){
             console.log("failed " + err);
         });
     
+   }
+   $scope.chkWriteAccess=function(){
+        var refLA = firebase.database().ref("lastAccess");
+         var objLa = $firebaseObject(refLA);
+         objLa.lastAccess={user:'admin',when: new Date() };
+           objLa.$save().then(function(ref) {
+            ref.key === objLa.$id; // true
+             $location.path("/admin");
+              $scope.isAdmin=true;
+          }, function(error) {
+//            console.log("Error:", error);
+                $scope.isAdmin=false;
+             $location.path("/home");
+            
+          });
+       
    }
 });
 app.controller('adminCtrl',function($scope,$firebaseAuth,$firebaseObject){
@@ -114,6 +132,7 @@ app.controller('adminCtrl',function($scope,$firebaseAuth,$firebaseObject){
             ref.key === obj.$id; // true
           }, function(error) {
             console.log("Error:", error);
+            
           });
     }
 });

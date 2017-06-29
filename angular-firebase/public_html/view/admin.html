@@ -1,5 +1,5 @@
 <h2>Admin Page</h2>
-<table>
+<table class="table table-bordered table-striped">
     <thead>
         <tr>
             <td>Commodity</td>
@@ -7,7 +7,7 @@
             <td>High</td>
             <td>Low</td>
             <td>Close</td>
-            <td><a href="" ng-click="addRecord()"> + </a>  </td>
+            <td><a href="" ng-click="addRecord()"> <span class="glyphicon glyphicon-plus-sign"></span> </a>  </td>
         </tr>
     </thead>
     <tbody>
@@ -17,7 +17,7 @@
             <td> <input type="text" ng-model="c.h" />  </td>
             <td> <input type="text" ng-model="c.l" />  </td>
             <td> <input type="text" ng-model="c.c" />  </td>
-            <td>del</td>
+            <td><span class="glyphicon glyphicon-remove-sign"></span></td>
         </tr>
     </tbody>
 </table>
